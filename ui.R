@@ -46,7 +46,7 @@ shinyUI( # start of UI code
                                      h3(p("Data Input")),
                                      p("This app supports only text files. ", align ="justify"),
                                      p("Please refer to the link below for sample csv file."),
-                                     a(href="https://raw.githubusercontent.com/DBAJAJ89/Text_Analytics/master/Game%20of%20Thrones%20IMDB%20reviews.txt"
+                                     a(href="https://raw.githubusercontent.com/VDatum/UDPipe_Shiny_UPOS/master/isb%20pgp%20goog%20search.txt"
                                        ,"Sample data input file"),   
                                      h3('How to use this app'),
                                      p('To use this app,click on', 
