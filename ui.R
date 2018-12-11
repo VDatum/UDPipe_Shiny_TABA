@@ -1,72 +1,93 @@
-library("shiny") 
+#invoking shiny library
+library("shiny")
 library("shinythemes")
-shinyUI( 
-fluidPage(theme = shinytheme("united"), 
-tags$head( 
-tags$style(HTML(" 
-@import url('//fonts.googleapis.com/css?family=Lobster|Cabin:400,700'); 
-")) 
-), 
-titlePanel(h1("Group Assignment - Text Analysis - Building a Shiny App around the UDPipe NLP Workflow",  
-style = "font-family: 'Lobster', cursive; 
-font-weight: 400; line-height: 1.1;  
-color: #d86636;")), 
-sidebarLayout( 
-sidebarPanel( 
-fileInput("file_input","Please upload text file"), 
-checkboxGroupInput("upos", 
-label = h3("Select Universal POS for co-occurrences filtering"), 
-choices = list("Adjective" = 'JJ', 
-"Noun" = "NN", 
-"Proper Noun" = "NNP", 
-"Adverb" = 'RB', 
-"Verb" = 'VB'), 
-selected = c("JJ","NN","NNP")) ,
-h5(span(strong(p("Wordcloud parameters")))),
 
-sliderInput("freq",
-            "Minimum Frequency:",
-            min = 1,  max = 50, value = 15),
-sliderInput("max",
-            "Maximum Number of Words:",
-            min = 1,  max = 300,  value = 100),
+shinyUI( # start of UI code
+  fluidPage(theme = shinytheme("sandstone"), # start of fluid page - to adjust to screen dimension
+            
+            titlePanel(strong("UDPipe Text Analytics")), #title of the App
+            
+            sidebarLayout( #start of side bar layout
+              
+              sidebarPanel #side bar panel start
+              (
+                fileInput("file1", label = h4("Upload Text File")), #section to ask user to upload input
+                
+                #create check box options for getting user input
+                checkboxGroupInput("upos", 
+                                   label = h5(span(strong("Select Parts of Speech for co-occurrences filtering"))),
+                                   
+                                   choices = list("Adjective"= 'ADJ',
+                                                  "Noun" = 'NOUN',
+                                                  "Proper Noun" = 'PROPN',
+                                                  "Adverb" = 'ADV',
+                                                  "Verb" = 'VERB'),
+                                   selected = c("ADJ","NOUN","PROPN")),
+                
+                h5(span(strong(p("Wordcloud parameters")))),
+                
+                sliderInput("freq",
+                            "Minimum Frequency:",
+                            min = 1,  max = 50, value = 15),
+                sliderInput("max",
+                            "Maximum Number of Words:",
+                            min = 1,  max = 300,  value = 100),
+                
+                radioButtons("radio", label = h5("UdPipe Model"),
+                             choices = list("English" = 1, "Spanish" = 2, "Hindi" = 3), 
+                             selected = 1)
+              ), #end of side bar panel
+              
+              #start of main panel code where we will create the panel tabs    
+              mainPanel(
+                tabsetPanel(type = "tabs",
+                            tabPanel("Overview",  # first panel tab - overview section
+                                     
+                                     h3(p("Data Input")),
+                                     p("This app supports only text files. ", align ="justify"),
+                                     p("Please refer to the link below for sample csv file."),
+                                     a(href="https://raw.githubusercontent.com/DBAJAJ89/Text_Analytics/master/Game%20of%20Thrones%20IMDB%20reviews.txt"
+                                       ,"Sample data input file"),   
+                                     h3('How to use this app'),
+                                     p('To use this app,click on', 
+                                       span (strong("Upload text file")),
+                                       'and upload the text file'),
+                                     
+                                     h3('What is the output from this app ?'),
+                                     p(span (strong("Annotation")),': Display a table of annotated document using UDPipe library'),
+                                     p(' Please note that only 100 rows are displayed. Entire corpus can be downloaded using the download button'),
+                                     
+                                     p(span (strong("Plots")),': Display a word clouds of all the nouns and verbs in the corpus'),
+                                     p(' Adjust the minimum frequency and maximum number of words from side panel'),
+                                     
+                                     p(span (strong("Co-Occurrence")),': Display a plot of top-30 co-occurrences at document level using a network plot'),
+                                     p(' Please use the checkbox to select different parts of speech for this plot')
+                            ),
+                            
+                            
+                            
+                            tabPanel("Annotation",    # second panel tab - annotated document section
+                                     dataTableOutput('dout1',width = "auto",height = "auto"),
+                                     downloadButton("download Data", "Download Annotated Data")
+                                     
+                                     
+                                     
+                                     
+                            ),
+                            
+                            tabPanel("Plots",         # third panel tab - wordcloud of nouns and verbs
+                                     h3("Nouns"),
+                                     plotOutput('plot1'),
+                                     h3("Verbs"),
+                                     plotOutput('plot2')),
+                            tabPanel("Co-Occurrences",   # fourth panel tab - wordcloud of nouns and verbs
+                                     plotOutput('plot3'))
+                ) # End of Tab Set Panel
+                
+                
+              ) # end of main Panel
+              
+            ) # end of sidebarLayout
+  )  # end if fluidPage
+) # end of UI
 
-radioButtons("radio", label = h5("UdPipe Model"),
-             choices = list("English" = 1, "Spanish" = 2, "Hindi" = 3), 
-             selected = 1)
-),
-mainPanel(
-  tabsetPanel(type = "tabs",
-              tabPanel("Overview",  # first panel tab - overview section
-                       
-                       h3(p("Data Input")),
-                       p("This app supports only text files. ", align ="justify"),
-                       p("Please refer to the link below for sample csv file."),
-                       a(href="https://raw.githubusercontent.com/VDatum/UDPipe_Shiny_UPOS/master/isb%20pgp%20goog%20search.txt"
-                         ,"Sample data input file"),   
-                       h3('How to use this app'),
-                       p('To use this app,click on', 
-                         span (strong("Upload text file")),
-                         'and upload the text file'),
-                       
-                       h3('What is the output from this app ?'),
-                       p(span (strong("Annotation")),': Display a table of annotated document using UDPipe library'),
-                       
-                       p(span (strong("Plots")),': Display a word clouds of all the nouns and verbs in the corpus'),
-                       p(' Adjust the minimum frequency and maximum number of words from side panel'),
-                       
-                       p(span (strong("Co-Occurrence")),': Display a plot of co-occurrences at document level using a network plot'),
-                       p(' Please use the checkbox to select different parts of speech for this plot')
-              ), 
-tabPanel("Annotation", 
-dataTableOutput('dout1'), 
-h4('Please click below button to download the annotated data'), 
-downloadButton("downloadData","Download Annotated Data")), 
-tabPanel("Word Clouds", 
-h3("Nouns"), 
-plotOutput('WordCloudPlot1'), 
-h3("verbs"), 
-plotOutput('WordCloudPlot2')), 
-tabPanel("Co-occurences",
-h3("Co-occurences"),
-plotOutput('CoOccurencePlot')) ) ) ) 
