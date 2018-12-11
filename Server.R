@@ -95,19 +95,5 @@ theme_graph(base_family = "Arial Narrow") +
 theme(legend.position = "none") + 
 labs(title = "Cooccurences plot") } }) 
 
-#Universal Parts of Speech vs Frequency of Occurences
-output$UPOS_Plot <- renderPlot({
-  if(is.null(input$file)){
-    output$placeholderTab5=renderText("You have to add a text file to see the annotated object")
-    return(NULL)
-  }
-  else{
-    set1 <- txt_freq(annot.obj$upos)
-    set1$key <- factor(set1$key, levels = rev(set1$key))
-    barchart(key ~ freq, data = set1, col = "cadetblue", 
-             main = "UPOS (Universal Parts of Speech)\n frequency of occurrence", 
-             xlab = "Freq")
-  }
-  
-})
+
 }) 

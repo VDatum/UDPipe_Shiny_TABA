@@ -69,7 +69,4 @@ h3("verbs"),
 plotOutput('WordCloudPlot2')), 
 tabPanel("Co-occurences",
 h3("Co-occurences"),
-plotOutput('CoOccurencePlot')),
-tabPanel("UPOS Plot",
-         h3("UPOS Plot"),
-         plotOutput('UPOS_Plot')) ) ) ) ) 
+plotOutput('CoOccurencePlot')) ) ) ) 
