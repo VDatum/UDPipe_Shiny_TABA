@@ -67,7 +67,7 @@ shinyUI( # start of UI code
                             
                             
                             tabPanel("Annotation",    # second panel tab - annotated document section
-                                     dataTableOutput('dout1',width = "auto",height = "auto"),
+                                     dataTableOutput('dout1'),
                                      downloadButton("download Data", "Download Annotated Data")
                                      
                                      
