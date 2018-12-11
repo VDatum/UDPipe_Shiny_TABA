@@ -70,5 +70,6 @@ plotOutput('WordCloudPlot2')),
 tabPanel("Co-occurences",
 h3("Co-occurences"),
 plotOutput('CoOccurencePlot')),
-tabPanel("Most frequently occured UPOS",p(textOutput('placeholderTab5')),
+tabPanel("UPOS Plot",
+         h3("UPOS Plot"),
          plotOutput('UPOS_Plot')) ) ) ) ) 
