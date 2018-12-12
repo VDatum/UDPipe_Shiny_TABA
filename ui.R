@@ -33,10 +33,9 @@ shinyUI( # start of UI code
                 sliderInput("max",
                             "Maximum Number of Words:",
                             min = 1,  max = 300,  value = 150),
-                sliderInput("freq1", "Minimum Frequency in the Co-Occurance Graph Plot:", min = 0,  max = 50, value = 25),
-                
-                radioButtons("radio", label = h5("UdPipe Model"),
-                             choices = list("English" = 1, "Hindu" = 2, "Spanish" = 3), 
+    
+                 radioButtons("radio", label = h5("UdPipe Model"),
+                             choices = list("English" = 1, "Hindi" = 2, "Spanish" = 3), 
                              selected = 1)
               ), #Default Selection as 1 for the English UDPipe Model for the annotated text
               
@@ -64,7 +63,7 @@ shinyUI( # start of UI code
                                      p(span (strong("Plots")),': Display a word clouds of all the nouns and verbs in the corpus'),
                                      p(' Adjust the minimum frequency and maximum number of words from side panel'),
                                      
-                                     p(span (strong("Co-Occurrence")),': Display a plot of top-25 co-occurrences at document level using a network plot'),
+                                     p(span (strong("Co-Occurrence")),': Display a plot of top-30 co-occurrences at document level using a network plot'),
                                      p(' Please use the checkbox to select different parts of speech for this plot')
                             ),
                             

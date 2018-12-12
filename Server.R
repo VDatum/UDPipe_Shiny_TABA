@@ -100,7 +100,7 @@ shinyServer(function(input, output) {
       
       
       # Creating the Co-Occurence plot
-      wordnetwork<- head(data_cooc,input$freq1)
+      wordnetwork<- head(data_cooc,50)
       wordnetwork<-igraph::graph_from_data_frame(wordnetwork)
       
       ggraph(wordnetwork,layout="fr") +
