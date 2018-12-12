@@ -52,7 +52,7 @@ shinyServer(function(input, output) {
     if(is.null(input$file_input)) {return (NULL)}
     else{
       out=annot.obj ()[,-4]
-      return(head(out))
+      return(head(out,100))
     }
   })
   
@@ -112,18 +112,6 @@ shinyServer(function(input, output) {
     }
     
   })
-  output$Occurence_Freq <- renderPlot({
-    if(is.null(input$file)){  #Exception Check if file  is empty
-      return(NULL)
-    }
-    else{
-      Occurence_Freq_POS <- txt_freq(annot.obj$upos)
-      Occurence_Freq_POS$key <- factor(Occurence_Freq_POS$key, levels = rev(Occurence_Freq_POS$key))
-      barchart(key ~ freq, data = Occurence_Freq_POS, col = "cadetblue", 
-               main = "UPOS (Universal Parts of Speech)\n The Frequency of occurrences", 
-               xlab = "Freq")
-    }
-    
-  })
+
 })
 

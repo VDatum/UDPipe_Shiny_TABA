@@ -29,7 +29,7 @@ shinyUI( # start of UI code
                 
                 sliderInput("freq",
                             "Minimum Frequency in the Wordcloud",
-                            min = 1,  max = 50, value = 5),
+                            min = 1,  max = 50, value = 25),
                 sliderInput("max",
                             "Maximum Number of Words:",
                             min = 1,  max = 300,  value = 150),
@@ -80,9 +80,8 @@ shinyUI( # start of UI code
                                      h3("Verbs"),
                                      plotOutput('plot_verbs')),
                             tabPanel("Co-Occurrence Plot",   # Co Occurence Plot based on selection
-                                     plotOutput('plot_CoOccurence_Plot')),
-                            tabPanel("Most frequently occured UPOS",h3("Frequency of Occurences based on UPOS (Universal Parts of Speech)"),
-                                     plotOutput('Occurence_Freq'))
+                                     plotOutput('plot_CoOccurence_Plot'))
+                           
                 ) # End of Tab Set Panel
                 
                 
