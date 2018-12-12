@@ -22,18 +22,18 @@ shinyServer(function(input, output) {
   udpipe_model = reactive({
     
     if(input$radio==1)
-    {udpipe_model = udpipe_load_udpipe_model("english-ud-2.0-170801.udpipe")}
+    {udpipe_model = udpipe_load_model("english-ud-2.0-170801.udpipe")}
     if(input$radio==2)
-    {udpipe_model = udpipe_load_udpipe_model("hindi-ud-2.0-170801.udpipe")}
+    {udpipe_model = udpipe_load_model("hindi-ud-2.0-170801.udpipe")}
     if(input$radio==3)
-    {udpipe_model = udpipe_load_udpipe_model("spanish-ud-2.0-170801.udpipe")}
+    {udpipe_model = udpipe_load_model("spanish-ud-2.0-170801.udpipe")}
     return(udpipe_model)
   })
   
   #passing the input data uploaded to the UDpipe annotate function  
   
   annot.obj =reactive({
-    x<-udpipe_annotate(udpipe_model(),x=data_file())
+    x<-udpipe_annotate(model(),x=data_file())
     x<-as.data.frame(x)
     return(x)
   })
