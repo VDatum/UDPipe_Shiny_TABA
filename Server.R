@@ -3,7 +3,8 @@ library(shiny)
 
 #Defining the Shiny Server function with input and output passed to it : 
 shinyServer(function(input, output) {
-  
+  storeWarn<- getOption("warn")
+  options(warn = -1) 
   # I/p is reactive so as to be dynamic
   #Reading the text file using the standard upload functionality and returning the cleaned text  here below :
   data_file <- reactive({
