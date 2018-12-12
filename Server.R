@@ -52,7 +52,7 @@ shinyServer(function(input, output) {
     if(is.null(input$file_input)) {return (NULL)}
     else{
       out=annot.obj ()[,-4]
-      return(head(out,100))
+      return(head(out,100)) #Gives 100  entries per page output on the Annotation tab
     }
   })
   

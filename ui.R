@@ -74,9 +74,9 @@ shinyUI( # start of UI code
                                      downloadButton("download Data", "Download Annotated Data")
                                   ),
                             
-                            tabPanel("Plots",         # third panel tab - wordcloud of nouns and verbs
+                            tabPanel("Plots",         # Wordcloud of nouns and verbs
                                      h3("Nouns"),
-                                     plotOutput('plot_nouns'), #Word cloud of Nouns and Verbs
+                                     plotOutput('plot_nouns'), 
                                      h3("Verbs"),
                                      plotOutput('plot_verbs')),
                             tabPanel("Co-Occurrence Plot",   # Co Occurence Plot based on selection
