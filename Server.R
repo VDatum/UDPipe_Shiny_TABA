@@ -65,7 +65,7 @@ shinyServer(function(input, output) {
     if(is.null(input$file_input)) {return (NULL)} #exception handler in case the file is empty
     else
     {
-      all_nouns=annot.obj() %>% subset(.,xpos %in% "NOUN") #filtering the corpus text for nouns
+      all_nouns=annot.obj() %>% subset(.,xpos %in% "NN") #filtering the corpus text for nouns
       top_nouns =txt_freq(all_nouns$lemma) # count of each noun terms in the text
       wordcloud(top_nouns$key,top_nouns$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(7,"Dark2"))
     }
@@ -79,7 +79,7 @@ shinyServer(function(input, output) {
     if(is.null(input$file_input)) {return (NULL)} #exception handler in case the file is empty
     else
     {
-      all_verbs=annot.obj() %>% subset(.,xpos %in% "VERB") #filtering the corpus text for verbs
+      all_verbs=annot.obj() %>% subset(.,xpos %in% "VB") #filtering the corpus text for verbs
       top_verbs =txt_freq(all_verbs$lemma)  # count of each verbs terms in the text
       wordcloud(top_verbs$key,top_verbs$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(7,"Dark2"))
     }

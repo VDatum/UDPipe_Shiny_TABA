@@ -1,7 +1,11 @@
 #User Interface Definition of the RShiny  App
 library("shiny")
 library("shinythemes")
-
+#Suppress Warnings
+tags$style(type="text/css",
+           ".shiny-output-error { visibility: hidden; }",
+           ".shiny-output-error:before { visibility: hidden; }"
+)
 shinyUI( # start of UI code
   fluidPage(theme = shinytheme("sandstone"),
             
