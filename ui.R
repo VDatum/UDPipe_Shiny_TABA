@@ -17,12 +17,12 @@ shinyUI( # start of UI code
                 checkboxGroupInput("upos", 
                                    label = h5(span(strong("Select Parts of Speech for co-occurrences filtering"))),
                                    
-                                   choices = list("Adjective"= 'jj',
+                                   choices = list("Adjective"= 'JJ',
                                                   "Noun" = 'NN',
-                                                  "Proper Noun" = 'PPN',
-                                                  "Adverb" = 'Av',
-                                                  "Verb" = 'VB'),
-                                   selected = c("jJ","Nn","Ppn")),
+                                                  "Proper Noun" = 'NNP',
+                                                  "Adverb" = 'ADV',
+                                                  "Verb" = 'Verb'),
+                                   selected = c("JJ","NN","NNP")),
                 
                 h5(span(strong(p("Wordcloud parameters")))),
                 
