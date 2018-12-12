@@ -14,7 +14,7 @@ shinyUI( # start of UI code
                 fileInput("file1", label = h4("Upload Text File")), #section to ask user to upload input
                 
                 #create check box options for getting user input
-                checkboxGroupInput("upos", 
+                checkboxGroupInput("xpos", 
                                    label = h5(span(strong("Select Parts of Speech for co-occurrences filtering"))),
                                    
                                    choices = list("Adjective"= 'JJ',

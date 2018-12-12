@@ -64,7 +64,7 @@ shinyServer(function(input, output) {
     if(is.null(input$file1)) {return (NULL)} #exception handler in case the file is empty
     else
     {
-      all_nouns=annot.obj() %>% subset(.,upos %in% "NOUN") #filtering the corpus for nouns
+      all_nouns=annot.obj() %>% subset(.,xpos %in% "NOUN") #filtering the corpus for nouns
       top_nouns =txt_freq(all_nouns$lemma) # count of each noun terms
       wordcloud(top_nouns$key,top_nouns$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(8,"Dark2")) # plotting on a word cloud
     }
@@ -78,7 +78,7 @@ shinyServer(function(input, output) {
     if(is.null(input$file1)) {return (NULL)} #exception handler in case the file is empty
     else
     {
-      all_verbs=annot.obj() %>% subset(.,upos %in% "VERB") #filtering the corpus for verbs
+      all_verbs=annot.obj() %>% subset(.,xpos %in% "VERB") #filtering the corpus for verbs
       top_verbs =txt_freq(all_verbs$lemma)  # count of each verbs terms
       #head(top_verbs,10)
       wordcloud(top_verbs$key,top_verbs$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(8,"Dark2")) # plotting on a word cloud
@@ -94,7 +94,7 @@ shinyServer(function(input, output) {
     else
     {
       data_cooc<-cooccurrence(
-        x=subset(annot.obj(),upos %in% input$upos), #collecting required upos from user input and filtering the annonated corpus
+        x=subset(annot.obj(),xpos %in% input$xpos), #collecting required xpos from user input and filtering the annonated corpus
         term="lemma", #paramerter to specify the extraction terms as lemma
         group=c("doc_id","paragraph_id","sentence_id"))
       
