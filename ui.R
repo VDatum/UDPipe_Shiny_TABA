@@ -1,87 +1,89 @@
-#invoking shiny library
+#User Interface Definition of the RShiny  App
 library("shiny")
 library("shinythemes")
 
 shinyUI( # start of UI code
-  fluidPage(theme = shinytheme("sandstone"), # start of fluid page - to adjust to screen dimension
+  fluidPage(theme = shinytheme("sandstone"),
             
-            titlePanel(strong("UDPipe Text Analytics")), #title of the App
+            titlePanel(strong("TABA:UDPipe NLP Workflow")), # Giving a title to the Application
             
-            sidebarLayout( #start of side bar layout
+            sidebarLayout(
               
-              sidebarPanel #side bar panel start
+              sidebarPanel #side bar panel startpoint
               (
-                fileInput("file1", label = h4("Upload Text File")), #section to ask user to upload input
+                fileInput("file_input", label = h4("Upload Text File")), #upload option for user to give the input file
                 
                 #create check box options for getting user input
                 checkboxGroupInput("upos", 
-                                   label = h5(span(strong("Select Parts of Speech for co-occurrences filtering"))),
+                                   label = h5(span(strong("Select Universal Parts-of-Speech Tags for co-occurrences filtering"))),
                                    
-                                   choices = list("Adjective"= 'ADJ',
-                                                  "Noun" = 'NOUN',
-                                                  "Proper Noun" = 'PROPN',
-                                                  "Adverb" = 'ADV',
-                                                  "Verb" = 'VERB'),
-                                   selected = c("ADJ","NOUN","PROPN")),
+                                   choices = list("Adjective"= 'JJ',
+                                                  "Noun" = 'NN',
+                                                  "Proper Noun" = 'NNP',
+                                                  "Adverb" = 'RB',
+                                                  "Verb" = 'VB'),
+                                   selected = c("JJ","NN","NNP")),
+                #Default selection to be Adjective , Noun and Proper Noun
                 
                 h5(span(strong(p("Wordcloud parameters")))),
                 
                 sliderInput("freq",
-                            "Minimum Frequency:",
-                            min = 1,  max = 50, value = 15),
+                            "Minimum Frequency in the Wordcloud",
+                            min = 1,  max = 50, value = 5),
                 sliderInput("max",
                             "Maximum Number of Words:",
-                            min = 1,  max = 300,  value = 100),
+                            min = 1,  max = 300,  value = 150),
+                sliderInput("freq1", "Minimum Frequency in the Co-Occurance Graph Plot:", min = 0,  max = 50, value = 25),
                 
                 radioButtons("radio", label = h5("UdPipe Model"),
-                             choices = list("English" = 1, "Spanish" = 2, "Hindi" = 3), 
+                             choices = list("English" = 1, "Hindu" = 2, "Spanish" = 3), 
                              selected = 1)
-              ), #end of side bar panel
+              ), #Default Selection as 1 for the English UDPipe Model for the annotated text
               
               #start of main panel code where we will create the panel tabs    
               mainPanel(
                 tabsetPanel(type = "tabs",
                             tabPanel("Overview",  # first panel tab - overview section
                                      
-                                     h3(p("Data Input")),
-                                     p("This app supports only text files. ", align ="justify"),
-                                     p("Please refer to the link below for sample csv file."),
+                                     h2(p("The App Overview :  Data Input")),
+                                     p("This is developed by the team of 3 members [ Vishal Somshekhar Shetty,  Shreenath KS and Aastha Sharma ] as part of the TABA Assignment of CBA Course : Batch 11"),
+                                     p("This app supports only text files.Kindly ensure the data input is in notepad format or .txt", align ="justify"),
+                                     p("Kindly refer to the link below for sample text file."),
                                      a(href="https://raw.githubusercontent.com/VDatum/UDPipe_Shiny_UPOS/master/isb%20pgp%20goog%20search.txt"
-                                       ,"Sample data input file"),   
+                                       ,"Sample data input file"),  
+                                     br(),
                                      h3('How to use this app'),
                                      p('To use this app,click on', 
                                        span (strong("Upload text file")),
                                        'and upload the text file'),
                                      
-                                     h3('What is the output from this app ?'),
+                                     h3('End Goal of this App ?'),
                                      p(span (strong("Annotation")),': Display a table of annotated document using UDPipe library'),
-                                     p(' Please note that only 100 rows are displayed. Entire corpus can be downloaded using the download button'),
+                                     p(' To make use of UDPipe for  making annotation table , word clouds &  co-occurence graphs'),
                                      
                                      p(span (strong("Plots")),': Display a word clouds of all the nouns and verbs in the corpus'),
                                      p(' Adjust the minimum frequency and maximum number of words from side panel'),
                                      
-                                     p(span (strong("Co-Occurrence")),': Display a plot of top-30 co-occurrences at document level using a network plot'),
+                                     p(span (strong("Co-Occurrence")),': Display a plot of top-25 co-occurrences at document level using a network plot'),
                                      p(' Please use the checkbox to select different parts of speech for this plot')
                             ),
                             
                             
                             
-                            tabPanel("Annotation",    # second panel tab - annotated document section
+                            tabPanel("Annotation",
                                      dataTableOutput('dout1'),
                                      downloadButton("download Data", "Download Annotated Data")
-                                     
-                                     
-                                     
-                                     
-                            ),
+                                  ),
                             
                             tabPanel("Plots",         # third panel tab - wordcloud of nouns and verbs
                                      h3("Nouns"),
-                                     plotOutput('plot1'),
+                                     plotOutput('plot_nouns'), #Word cloud of Nouns and Verbs
                                      h3("Verbs"),
-                                     plotOutput('plot2')),
-                            tabPanel("Co-Occurrences",   # fourth panel tab - wordcloud of nouns and verbs
-                                     plotOutput('plot3'))
+                                     plotOutput('plot_verbs')),
+                            tabPanel("Co-Occurrence Plot",   # Co Occurence Plot based on selection
+                                     plotOutput('plot_CoOccurence_Plot')),
+                            tabPanel("Most frequently occured UPOS",h3("Frequency of Occurences based on UPOS (Universal Parts of Speech)"),
+                                     plotOutput('Occurence_Freq'))
                 ) # End of Tab Set Panel
                 
                 
