@@ -33,7 +33,7 @@ shinyServer(function(input, output) {
   #passing the input data uploaded to the UDpipe annotate function  
   
   annot.obj =reactive({
-    x<-udpipe_annotate(model(),x=data_file())
+    x<-udpipe_annotate(udpipe_model(),x=data_file())
     x<-as.data.frame(x)
     return(x)
   })
