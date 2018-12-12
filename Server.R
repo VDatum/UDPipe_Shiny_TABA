@@ -1,119 +1,116 @@
-#Start of server code
+#Server code of the Shiny Web app'n
+library(shiny)
+
+#Defining the Shiny Server function with input and output passed to it : 
 shinyServer(function(input, output) {
   
-  #Module to input data from user  
-  
-  # Input from user is in rective mode since the data should change with every change in input data  
-  Dataset <- reactive({
-    if (is.null(input$file1)) { return(NULL) }  #here we have used file1 since the UI.r has the same name
+  # I/p is reactive so as to be dynamic
+  #Reading the text file using the standard upload functionality and returning the cleaned text  here below :
+  data_file <- reactive({
+    if (is.null(input$file_input)) { return(NULL) }  #we check if the file_input used is null or not since the UI.r has the same name
     else{
-      text<- readLines(input$file1$datapath) #readline function to read the input from user
-      text = str_replace_all(text, "<.*?>","") # stringr library has the function str_replace_all to clean the corpus
-      text=text[text!=""] #selecting not null text
-      return(text) # return cleaned corpus
+      text<- readLines(input$file_input$datapath) #The Readlines function to read the input file from user , who has to upload the file [text]
+      text = str_replace_all(text, "<.*?>","") # clean the corpus text
+      text=text[text!=""] #selecting all except null text
+      return(text) # return the cleaned corpus text
     }
   })
   
-  # uploading the input module  
+  # uploading the udpipe_model function [ Languages included : English, Spanish and Hindi ]
+  # Giving option to upload trained udpipe udpipe_model for different languages as specified above
   
-  model = reactive({
+  udpipe_model = reactive({
     
     if(input$radio==1)
-    {model = udpipe_load_model("english-ud-2.0-170801.udpipe")}
+    {udpipe_model = udpipe_load_model("english-ud-2.0-170801.udpipe")}
     if(input$radio==2)
-    {model = udpipe_load_model("spanish-ud-2.0-170801.udpipe")}
+    {udpipe_model = udpipe_load_model("hindi-ud-2.0-170801.udpipe")}
     if(input$radio==3)
-    {model = udpipe_load_model("hindi-ud-2.0-170801.udpipe")}
-    return(model)
+    {udpipe_model = udpipe_load_model("spanish-ud-2.0-170801.udpipe")}
+    return(udpipe_model)
   })
   
-  #passing the input data and english model to the UDpipe annotate function  
+  #passing the input data uploaded to the UDpipe annotate function  
   
   annot.obj =reactive({
-    x<-udpipe_annotate(model(),x=Dataset())
+    x<-udpipe_annotate(udpipe_model(),x=data_file())
     x<-as.data.frame(x)
     return(x)
   })
   
-  #--------------tab panel 2 outputs--------------------#   
-  
-  # module to let the user download the annotated data as a csv input  
+  # letting the user download the annotated data as a csv file 
   output$downloadData <- downloadHandler(
     filename=function(){
       "annonated_data.csv" #name of the downloaded file
     },
     content = function(file) {
-      write.csv(annot.obj()[,-4],file,row.names=FALSE) #writing the output as a csv after removing the sentence column
+      write.csv(annot.obj()[,-4],file,row.names=FALSE)
     })
   
-  # module to display the top 100 rows of the annotated corpus. we have intentionally hidden the sentence field    
+  # Display the rows of annotated corpus text. 
   output$dout1 = renderDataTable({
-    if(is.null(input$file1)) {return (NULL)} #exception handler in case the file is empty
+    if(is.null(input$file_input)) {return (NULL)}
     else{
       out=annot.obj ()[,-4]
       return(head(out,100))
     }
   })
   
-  #--------------tab panel 3 outputs--------------------# 
   
-  #module to print a wordcloud for nouns
   
-  output$plot1 = renderPlot({
+  #Nouns Wordcloud
+  
+  output$plot_nouns = renderPlot({
     
-    if(is.null(input$file1)) {return (NULL)} #exception handler in case the file is empty
+    if(is.null(input$file_input)) {return (NULL)} #exception handler in case the file is empty
     else
     {
-      all_nouns=annot.obj() %>% subset(.,xpos %in% "NOUN") #filtering the corpus for nouns
-      top_nouns =txt_freq(all_nouns$lemma) # count of each noun terms
-      wordcloud(top_nouns$key,top_nouns$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(8,"Dark2")) # plotting on a word cloud
+      all_nouns=annot.obj() %>% subset(.,xpos %in% "NOUN") #filtering the corpus text for nouns
+      top_nouns =txt_freq(all_nouns$lemma) # count of each noun terms in the text
+      wordcloud(top_nouns$key,top_nouns$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(7,"Dark2"))
     }
     
   })
   
-  #module to print a wordcloud for verbs
+  #Verbs Wordcloud
   
-  output$plot2 = renderPlot({
+  output$plot_verbs = renderPlot({
     
-    if(is.null(input$file1)) {return (NULL)} #exception handler in case the file is empty
+    if(is.null(input$file_input)) {return (NULL)} #exception handler in case the file is empty
     else
     {
-      all_verbs=annot.obj() %>% subset(.,xpos %in% "VERB") #filtering the corpus for verbs
-      top_verbs =txt_freq(all_verbs$lemma)  # count of each verbs terms
-      #head(top_verbs,10)
-      wordcloud(top_verbs$key,top_verbs$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(8,"Dark2")) # plotting on a word cloud
+      all_verbs=annot.obj() %>% subset(.,xpos %in% "VERB") #filtering the corpus text for verbs
+      top_verbs =txt_freq(all_verbs$lemma)  # count of each verbs terms in the text
+      wordcloud(top_verbs$key,top_verbs$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(7,"Dark2"))
     }
     
   })
   
-  #--------------tab panel 4 output--------------------#   
-  
-  output$plot3 = renderPlot({
+  output$plot_CoOccurence_Plot = renderPlot({
     
-    if(is.null(input$file1)) {return (NULL)} #exception handler in case the file is empty
+    if(is.null(input$file_input)) {return (NULL)} #exception handler in case the file is empty
     else
     {
       data_cooc<-cooccurrence(
-        x=subset(annot.obj(),xpos %in% input$xpos), #collecting required xpos from user input and filtering the annonated corpus
-        term="lemma", #paramerter to specify the extraction terms as lemma
+        x=subset(annot.obj(),xpos %in% input$xpos), 
+        #collecting required xpos from user input and filtering the annonated corpus . 
+        #By default it is : Adjective [JJ], Noun [NN] and Proper  Noun [NNP]
+        term="lemma", #extract terms as lemma
         group=c("doc_id","paragraph_id","sentence_id"))
       
       
-      # creation of co-occurrence graph
+      # Creating the Co-Occurence plot
       wordnetwork<- head(data_cooc,50)
       wordnetwork<-igraph::graph_from_data_frame(wordnetwork)
       
-      #plotting the graph
       ggraph(wordnetwork,layout="fr") +
         geom_edge_link(aes(width=cooc,edge_alpha=cooc),edge_colour="orange")+
         geom_node_text(aes(label=name),col="darkgreen", size=4)+
         theme_graph(base_family="Arial Narrow")+
         theme(legend.position="none")+
-        
-        labs(title= "Cooccurrences Plot")
+        labs(title= "Cooccurrences Plot within 3 words distance")
     }
     
   })
   
 })
-
