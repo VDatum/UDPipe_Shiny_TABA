@@ -36,9 +36,7 @@ shinyServer(function(input, output) {
   annot.obj =reactive({
     x<-udpipe_annotate(udpipe_model(),x=data_file())
     x<-as.data.frame(x)
-     if(input$radio==2) {
-    windowsFonts(devanew=windowsFont("Devanagari new normal"))
-    }
+     
     return(x)
   })
   
@@ -71,6 +69,9 @@ shinyServer(function(input, output) {
     if(is.null(input$file_input)) {return (NULL)} #exception handler in case the file is empty
     else
     {
+      if(input$radio==2) {
+    windowsFonts(devanew=windowsFont("Devanagari new normal"))
+    }
       all_nouns=annot.obj() %>% subset(.,xpos %in% "NN") #filtering the corpus text for nouns
       top_nouns =txt_freq(all_nouns$lemma) # count of each noun terms in the text
       wordcloud(top_nouns$key,top_nouns$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(7,"Dark2"))
@@ -85,6 +86,9 @@ shinyServer(function(input, output) {
     if(is.null(input$file_input)) {return (NULL)} #exception handler in case the file is empty
     else
     {
+      if(input$radio==2) {
+    windowsFonts(devanew=windowsFont("Devanagari new normal"))
+    }
       all_verbs=annot.obj() %>% subset(.,xpos %in% "VB") #filtering the corpus text for verbs
       top_verbs =txt_freq(all_verbs$lemma)  # count of each verbs terms in the text
       wordcloud(top_verbs$key,top_verbs$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(7,"Dark2"))
@@ -97,6 +101,9 @@ shinyServer(function(input, output) {
     if(is.null(input$file_input)) {return (NULL)} #exception handler in case the file is empty
     else
     {
+      if(input$radio==2) {
+    windowsFonts(devanew=windowsFont("Devanagari new normal"))
+    }
       data_cooc<-cooccurrence(
         x=subset(annot.obj(),xpos %in% input$xpos), 
         #collecting required xpos from user input and filtering the annonated corpus . 
