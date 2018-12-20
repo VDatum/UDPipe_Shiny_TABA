@@ -36,12 +36,13 @@ shinyServer(function(input, output) {
   annot.obj =reactive({
     x<-udpipe_annotate(udpipe_model(),x=data_file())
     x<-as.data.frame(x)
+     if(input$radio==2) {
+    windowsFonts(devanew=windowsFont("Devanagari new normal"))
+    }
     return(x)
   })
   
-  if(input$radio==2) {
-    windowsFonts(devanew=windowsFont("Devanagari new normal"))
-    }
+ 
   
   # letting the user download the annotated data as a csv file 
   output$downloadData <- downloadHandler(
