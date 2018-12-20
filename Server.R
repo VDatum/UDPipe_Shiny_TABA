@@ -42,8 +42,6 @@ shinyServer(function(input, output) {
   if(input$radio==2) {
     windowsFonts(devanew=windowsFont("Devanagari new normal"))
     }
-  else
-    {}
   
   # letting the user download the annotated data as a csv file 
   output$downloadData <- downloadHandler(
