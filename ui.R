@@ -88,8 +88,7 @@ shinyUI( # start of UI code
                                      h3("Adverbs"),
                                      plotOutput('plot_adverbs'),
                                      h3("Verbs"),
-                                     plotOutput('plot_verbs'),
-                                    ),
+                                     plotOutput('plot_verbs')),
                             tabPanel("Co-Occurrence Plot",   # Co Occurence Plot based on selection
                                      plotOutput('plot_CoOccurence_Plot'))
                             
