@@ -172,8 +172,10 @@ shinyServer(function(input, output) {
         theme_graph(base_family="Arial Narrow")+
         theme(legend.position="none")+
         labs(title= "Cooccurrences Plot from the XPOS selected")
-    }
-    
+      }
+   })
+  
+  
    output$plot_freqplot <- renderPlot({
        if(is.null(input$file)){
         return(NULL)
@@ -185,6 +187,7 @@ shinyServer(function(input, output) {
                main = "XPOS \n frequency of occurrence", 
                xlab = "Freq")
         } 
+     
   })
   
 })
