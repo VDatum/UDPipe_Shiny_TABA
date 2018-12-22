@@ -16,7 +16,11 @@ shinyUI( # start of UI code
               sidebarPanel #side bar panel startpoint
               (
                 fileInput("file_input", label = h4("Upload Text File")), #upload option for user to give the input file
-                
+                 radioButtons("radio", label = h5("UdPipe Model"),
+                             choices = list("English" = 1, "Hindi" = 2, "Spanish" = 3), 
+                             selected = 1),
+                  #Default Selection as 1 for the English UDPipe Model for the annotated text  
+                         
                 #create check box options for getting user input
                 checkboxGroupInput("xpos", 
                                    label = h5(span(strong("Select Universal Parts-of-Speech Tags for co-occurrences filtering"))),
@@ -28,10 +32,7 @@ shinyUI( # start of UI code
                                                   "Verb" = 'VB'),
                                    selected = c("JJ","NN","NNP")),
                 #Default selection to be Adjective , Noun and Proper Noun
-               radioButtons("radio", label = h5("UdPipe Model"),
-                             choices = list("English" = 1, "Hindi" = 2, "Spanish" = 3), 
-                             selected = 1),
-                  #Default Selection as 1 for the English UDPipe Model for the annotated text       
+                   
                 h5(span(strong(p("Wordcloud parameters")))),
                 
                 sliderInput("freq",
@@ -50,16 +51,23 @@ shinyUI( # start of UI code
                                      
                                      h2(p("The App Overview :  Data Input")),
                                      p("This is developed by the team of 3 members [ Vishal Somshekhar Shetty,  Shreenath KS and Aastha Sharma ] as part of the TABA Assignment of CBA Course : Batch 11"),
+                                     
+                                     br(),
+                                 
+                                     h3('Logical Flow of the App'),
+                                     p(span (strong("Upload and Read Text File")),'A : Click on browse to upload the text file and wait for few mins for it to reflect in the annotation tab'),
                                      p("This app supports only text files.Kindly ensure the data input is in notepad format or .txt", align ="justify"),
                                      p("Kindly refer to the link below for sample text file."),
                                      a(href="https://raw.githubusercontent.com/VDatum/UDPipe_Shiny_xpos/master/isb%20pgp%20goog%20search.txt"
                                        ,"Sample data input file"),  
-                                     br(),
-                                     h3('How to use this app'),
-                                     p('To use this app,click on', 
-                                       span (strong("Upload text file")),
-                                       'and upload the text file'),
                                      
+                                     p(span (strong("Select the udpipe model")),'B : Option to upload the trained udpipe model in English, Hindi and Spanish.'),
+                                     p('Choose the respective models based on the uploaded text file. Default is chosen as English'),
+                                     
+                                     p(span (strong("Select the XPOS Tags for the  co-occurence plot")),'C: Select list of part-of-speech tags (XPOS) using check box for plotting co-occurrences'),
+                                     p(' Please use the checkbox to select different parts of speech for this plot. Default is Noun, Adjective & Proper Noun'),
+                                     
+                                
                                      h3('End Goal of this App ?'),
                                      p(span (strong("Annotation")),': Display a table of annotated document using UDPipe library'),
                                      p(' To make use of UDPipe for  making annotation table , word clouds &  co-occurence graphs'),
