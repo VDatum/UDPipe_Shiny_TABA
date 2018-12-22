@@ -177,15 +177,15 @@ shinyServer(function(input, output) {
   
   
    output$plot_freqplot <- renderPlot({
-       if(is.null(input$file)){
+       if(is.null(input$file_input)){
         return(NULL)
       }
       else{
       freqtext <- txt_freq(annot.obj$xpos)
       freqtext$key <- factor(freqtext$key, levels = rev(freqtext$key))
-      barchart(key ~ freq, data = set1, col = "cadetblue", 
+      barchart(key ~ freq, data = freqtext, col = "cadetblue", 
                main = "XPOS \n frequency of occurrence", 
-               xlab = "Freq")
+               xlab = "Frequency")
         } 
      
   })
