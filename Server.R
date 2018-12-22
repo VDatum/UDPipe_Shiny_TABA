@@ -174,6 +174,17 @@ shinyServer(function(input, output) {
         labs(title= "Cooccurrences Plot from the XPOS selected")
     }
     
+   output$plot_freqplot <- renderPlot({
+       if(is.null(input$file)){
+        return(NULL)
+      }
+      else{
+      freqtext <- txt_freq(annot.obj$xpos)
+      freqtext$key <- factor(freqtext$key, levels = rev(freqtext$key))
+      barchart(key ~ freq, data = set1, col = "cadetblue", 
+               main = "XPOS \n frequency of occurrence", 
+               xlab = "Freq")
+        } 
   })
   
 })
