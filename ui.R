@@ -7,7 +7,7 @@ tags$style(type="text/css",
            ".shiny-output-error:before { visibility: hidden; }"
 )
 shinyUI( # start of UI code
-  fluidPage(theme = shinytheme("slate"),
+  fluidPage(theme = shinytheme("cerulean"),
             
             titlePanel(strong("TABA:UDPipe NLP Workflow")), # Giving a title to the Application
             
