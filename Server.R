@@ -11,7 +11,7 @@ shinyServer(function(input, output) {
     windowsFonts(devanew=windowsFont("Devanagari new normal"))
     if (is.null(input$file_input)) { return(NULL) }  #we check if the file_input used is null or not since the UI.r has the same name
     else{
-      text<- readLines(input$file_input$datapath) #The Readlines function to read the input file from user , who has to upload the file [text]
+      text<- readLines(input$file_input$datapath,encoding='UTF-8') #The Readlines function to read the input file from user , who has to upload the file [text]
       text = str_replace_all(text, "<.*?>","") # clean the corpus text
       text=text[text!=""] #selecting all except null text
       return(text) # return the cleaned corpus text
