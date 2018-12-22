@@ -30,7 +30,7 @@ shinyUI( # start of UI code
                 #Default selection to be Adjective , Noun and Proper Noun
                radioButtons("radio", label = h5("UdPipe Model"),
                              choices = list("English" = 1, "Hindi" = 2, "Spanish" = 3), 
-                             selected = 1)
+                             selected = 1),
                   #Default Selection as 1 for the English UDPipe Model for the annotated text       
                 h5(span(strong(p("Wordcloud parameters")))),
                 
@@ -83,7 +83,7 @@ shinyUI( # start of UI code
                                      plotOutput('plot_nouns'),
                                      h3("Adjectives"),
                                      plotOutput('plot_adjectives'),
-                                     h3("Proper Nounes"),
+                                     h3("Proper Nouns"),
                                      plotOutput('plot_propernouns'),
                                      h3("Adverbs"),
                                      plotOutput('plot_adverbs'),
