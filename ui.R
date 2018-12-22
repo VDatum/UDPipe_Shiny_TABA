@@ -52,19 +52,19 @@ shinyUI( # start of UI code
                                      h2(p("The App Overview :  Data Input")),
                                      p("This is developed by the team of 3 members [ Vishal Somshekhar Shetty,  Shreenath KS and Aastha Sharma ] as part of the TABA Assignment of CBA Course : Batch 11"),
                                      
-                                     br(),
+                                     
                                  
                                      h3('Logical Flow of the App'),
-                                     p(span (strong("Upload and Read Text File")),'A : Click on browse to upload the text file and wait for few mins for it to reflect in the annotation tab'),
+                                     p(span (strong("A. Upload and Read Text File")),'Click on browse to upload the text file and wait for few mins for it to reflect in the annotation tab'),
                                      p("This app supports only text files.Kindly ensure the data input is in notepad format or .txt", align ="justify"),
                                      p("Kindly refer to the link below for sample text file."),
                                      a(href="https://raw.githubusercontent.com/VDatum/UDPipe_Shiny_xpos/master/isb%20pgp%20goog%20search.txt"
                                        ,"Sample data input file"),  
                                      
-                                     p(span (strong("Select the udpipe model")),'B : Option to upload the trained udpipe model in English, Hindi and Spanish.'),
+                                     p(span (strong("B. Select the udpipe model")),'Option to upload the trained udpipe model in English, Hindi and Spanish.'),
                                      p('Choose the respective models based on the uploaded text file. Default is chosen as English'),
                                      
-                                     p(span (strong("Select the XPOS Tags for the  co-occurence plot")),'C: Select list of part-of-speech tags (XPOS) using check box for plotting co-occurrences'),
+                                     p(span (strong("C. Select the XPOS Tags for the  co-occurence plot")),'Select list of part-of-speech tags (XPOS) using check box for plotting co-occurrences'),
                                      p(' Please use the checkbox to select different parts of speech for this plot. Default is Noun, Adjective & Proper Noun'),
                                      
                                 
@@ -76,7 +76,11 @@ shinyUI( # start of UI code
                                      p(' Adjust the minimum frequency and maximum number of words from side panel'),
                                      
                                      p(span (strong("Co-Occurrence")),': Display a plot of co-occurrences at document level using a network plot'),
-                                     p(' Please use the checkbox to select different parts of speech for this plot')
+                                     p(' Please use the checkbox to select different parts of speech for this plot'),
+                                     
+                                     p(span (strong("Most Frequently Occured XPOS tags")),': Display a Frequency plot of XPOS tags'),
+                                     p(' Based on the different parts of speech listed applied on the annotated text')
+                                     
                             ),
                             
                             
