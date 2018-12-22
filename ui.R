@@ -98,7 +98,9 @@ shinyUI( # start of UI code
                                      h3("Verbs"),
                                      plotOutput('plot_verbs')),
                             tabPanel("Co-Occurrence Plot",   # Co Occurence Plot based on selection
-                                     plotOutput('plot_CoOccurence_Plot'))
+                                     plotOutput('plot_CoOccurence_Plot')),
+                             tabPanel("Most frequently occured XPOS",   # Frequency plot on the occurence of difference XPOS tags
+                                     plotOutput('plot_freqplot'))
                             
                 ) # End of Tab Set Panel
                 
