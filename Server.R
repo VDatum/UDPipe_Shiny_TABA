@@ -8,6 +8,7 @@ shinyServer(function(input, output) {
   # I/p is reactive so as to be dynamic
   #Reading the text file using the standard upload functionality and returning the cleaned text  here below :
   data_file <- reactive({
+    windowsFonts(devanew=windowsFont("Devanagari new normal"))
     if (is.null(input$file_input)) { return(NULL) }  #we check if the file_input used is null or not since the UI.r has the same name
     else{
       text<- readLines(input$file_input$datapath) #The Readlines function to read the input file from user , who has to upload the file [text]
