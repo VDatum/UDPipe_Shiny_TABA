@@ -58,7 +58,7 @@ shinyUI( # start of UI code
                                      p(span (strong("A. Upload and Read Text File")),'Click on browse to upload the text file and wait for few mins for it to reflect in the annotation tab'),
                                      p("This app supports only text files.Kindly ensure the data input is in notepad format or .txt", align ="justify"),
                                      p("Kindly refer to the link below for sample text file."),
-                                     a(href="https://raw.githubusercontent.com/VDatum/UDPipe_Shiny_xpos/master/isb%20pgp%20goog%20search.txt"
+                                     a(href="https://raw.githubusercontent.com/VDatum/UDPipe_Shiny_TABA/master/isb%20pgp%20goog%20search.txt"
                                        ,"Sample data input file"),  
                                      
                                      p(span (strong("B. Select the udpipe model")),'Option to upload the trained udpipe model in English, Hindi and Spanish.'),
