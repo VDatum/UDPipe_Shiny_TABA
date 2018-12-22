@@ -80,6 +80,39 @@ shinyServer(function(input, output) {
     
   })
   
+  #Word Plot for Adjectives
+  output$plot_adjectives = renderPlot({
+    
+    if(is.null(input$file_input)) {return (NULL)} #exception handler in case the file is empty
+    else
+    {
+      if(input$radio==2) {
+    windowsFonts(devanew=windowsFont("Devanagari new normal"))
+    }
+      all_adjs=annot.obj() %>% subset(.,xpos %in% "JJ") #filtering the corpus text for adjectives
+      top_adjs =txt_freq(all_adjs$lemma) # count of each adjectives terms in the text
+      wordcloud(top_adjs$key,top_adjs$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(7,"Dark2"))
+    }
+    
+  })
+  
+  #Word Plot for Proper Nouns
+   output$plot_propernouns= renderPlot({
+    
+    if(is.null(input$file_input)) {return (NULL)} #exception handler in case the file is empty
+    else
+    {
+      if(input$radio==2) {
+    windowsFonts(devanew=windowsFont("Devanagari new normal"))
+    }
+      all_prpn=annot.obj() %>% subset(.,xpos %in% "NNP") #filtering the corpus text for proper nouns
+      top_prpn =txt_freq(all_prpn$lemma) # count of each proper noun terms in the text
+      wordcloud(top_prpn$key,top_prpn$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(7,"Dark2"))
+    }
+    
+  })
+  
+  
   #Verbs Wordcloud
   
   output$plot_verbs = renderPlot({
@@ -93,6 +126,22 @@ shinyServer(function(input, output) {
       all_verbs=annot.obj() %>% subset(.,xpos %in% "VB") #filtering the corpus text for verbs
       top_verbs =txt_freq(all_verbs$lemma)  # count of each verbs terms in the text
       wordcloud(top_verbs$key,top_verbs$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(7,"Dark2"))
+    }
+    
+  })
+  
+    #Word Plot for Adverbs
+   output$plot_adverbs= renderPlot({
+    
+    if(is.null(input$file_input)) {return (NULL)} #exception handler in case the file is empty
+    else
+    {
+      if(input$radio==2) {
+    windowsFonts(devanew=windowsFont("Devanagari new normal"))
+    }
+      all_adverbs=annot.obj() %>% subset(.,xpos %in% "RB") #filtering the corpus text for proper nouns
+      top_adverbs =txt_freq(all_adverbs$lemma) # count of each proper noun terms in the text
+      wordcloud(top_adverbs$key,top_adverbs$freq,min.freq = input$freq, max.words=input$max,colors =brewer.pal(7,"Dark2"))
     }
     
   })
@@ -122,7 +171,7 @@ shinyServer(function(input, output) {
         geom_node_text(aes(label=name),col="darkgreen", size=4)+
         theme_graph(base_family="Arial Narrow")+
         theme(legend.position="none")+
-        labs(title= "Cooccurrences Plot within 3 words distance")
+        labs(title= "Cooccurrences Plot from the XPOS selected")
     }
     
   })
