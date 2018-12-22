@@ -28,20 +28,20 @@ shinyUI( # start of UI code
                                                   "Verb" = 'VB'),
                                    selected = c("JJ","NN","NNP")),
                 #Default selection to be Adjective , Noun and Proper Noun
-                
+               radioButtons("radio", label = h5("UdPipe Model"),
+                             choices = list("English" = 1, "Hindi" = 2, "Spanish" = 3), 
+                             selected = 1)
+                  #Default Selection as 1 for the English UDPipe Model for the annotated text       
                 h5(span(strong(p("Wordcloud parameters")))),
                 
                 sliderInput("freq",
                             "Minimum Frequency in the Wordcloud",
-                            min = 1,  max = 50, value = 25),
+                            min = 1,  max = 50, value = 15),
                 sliderInput("max",
                             "Maximum Number of Words:",
                             min = 1,  max = 300,  value = 150),
                 
-                radioButtons("radio", label = h5("UdPipe Model"),
-                             choices = list("English" = 1, "Hindi" = 2, "Spanish" = 3), 
-                             selected = 1)
-              ), #Default Selection as 1 for the English UDPipe Model for the annotated text
+              ), 
               
               #start of main panel code where we will create the panel tabs    
               mainPanel(
@@ -64,10 +64,10 @@ shinyUI( # start of UI code
                                      p(span (strong("Annotation")),': Display a table of annotated document using UDPipe library'),
                                      p(' To make use of UDPipe for  making annotation table , word clouds &  co-occurence graphs'),
                                      
-                                     p(span (strong("Plots")),': Display a word clouds of all the nouns and verbs in the corpus'),
+                                     p(span (strong("Plots")),': Display a word clouds of all the list of part of speech tags (XPOS) in the corpus'),
                                      p(' Adjust the minimum frequency and maximum number of words from side panel'),
                                      
-                                     p(span (strong("Co-Occurrence")),': Display a plot of top-30 co-occurrences at document level using a network plot'),
+                                     p(span (strong("Co-Occurrence")),': Display a plot of co-occurrences at document level using a network plot'),
                                      p(' Please use the checkbox to select different parts of speech for this plot')
                             ),
                             
@@ -78,11 +78,18 @@ shinyUI( # start of UI code
                                      downloadButton("download Data", "Download Annotated Data")
                             ),
                             
-                            tabPanel("Plots",         # third panel tab - wordcloud of nouns and verbs
+                            tabPanel("Plots",         # third panel tab - wordcloud of nouns , adjectives , Proper Nounes, Adverbs and verbs
                                      h3("Nouns"),
-                                     plotOutput('plot_nouns'), #Word cloud of Nouns and Verbs
+                                     plotOutput('plot_nouns'),
+                                     h3("Adjectives"),
+                                     plotOutput('plot_adjectives'),
+                                     h3("Proper Nounes"),
+                                     plotOutput('plot_propernouns'),
+                                     h3("Adverbs"),
+                                     plotOutput('plot_adverbs'),
                                      h3("Verbs"),
-                                     plotOutput('plot_verbs')),
+                                     plotOutput('plot_verbs'),
+                                    ),
                             tabPanel("Co-Occurrence Plot",   # Co Occurence Plot based on selection
                                      plotOutput('plot_CoOccurence_Plot'))
                             
