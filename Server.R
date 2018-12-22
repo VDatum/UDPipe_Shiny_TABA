@@ -183,7 +183,7 @@ shinyServer(function(input, output) {
       else{
       frequencyoftext <- txt_freq(annot.obj()$xpos)
       frequencyoftext$key <- factor(frequencyoftext$key, levels = rev(frequencyoftext$key))
-      barchart(key ~ freq, data = frequencyoftext, col = "cadetblue", 
+      barchart(freq ~ key, data = frequencyoftext, col = "cadetblue", 
                main = "XPOS \n frequency of occurrence", 
                xlab = "Freq")
         } 
