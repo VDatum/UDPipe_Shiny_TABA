@@ -1,3 +1,20 @@
+#############################################################################################################################
+#TABA Assignment Group Members :
+#1) Aastha Sharma            : 11810044
+#2) Shreenath KS             : 11810117
+#3) Vishal Somshekhar Shetty : 11810095
+#############################################################################################################################
+#We have built a RShiny App around the UDPipe NLP Workflow for the respective selection of list of part of speech tags (XPOS)
+#A)Upload the text file , read it and store it as an annotated object.
+#B)Option to upload and select the respective UDPipe Models for English and Hindi
+#c)Select list of XPOS tags for the co-occurence plot
+#############################################################################################################################
+#To achieve the bonus Points :
+#Logical Flow is provided along with the End Goal of the app and the required steps in achieving the same.
+#Two Extra Features were added to the app :
+# 1) Slider inputs for Word Cloud Parameters :a) Setting up Frequency in the WordCloud & b) Filtering the maximum no of words
+# 2) A frequency plot on the number of occurences for the different XPOS tags derived from the uploaded text file
+#############################################################################################################################
 #User Interface Definition of the RShiny  App
 library("shiny")
 library("shinythemes")
@@ -16,11 +33,11 @@ shinyUI( # start of UI code
               sidebarPanel #side bar panel startpoint
               (
                 fileInput("file_input", label = h4("Upload Text File")), #upload option for user to give the input file
-                 radioButtons("radio", label = h5("UdPipe Model"),
-                             choices = list("English" = 1, "Hindi" = 2, "German" = 3), 
+                radioButtons("radio", label = h5("UdPipe Model"),
+                             choices = list("English" = 1, "Hindi" = 2), 
                              selected = 1),
-                  #Default Selection as 1 for the English UDPipe Model for the annotated text  
-                         
+                #Default Selection as 1 for the English UDPipe Model for the annotated text  
+                
                 #create check box options for getting user input
                 checkboxGroupInput("xpos", 
                                    label = h5(span(strong("Select Universal Parts-of-Speech Tags for co-occurrences filtering"))),
@@ -32,7 +49,7 @@ shinyUI( # start of UI code
                                                   "Verb" = 'VB'),
                                    selected = c("JJ","NN","NNP")),
                 #Default selection to be Adjective , Noun and Proper Noun
-                   
+                
                 h5(span(strong(p("Wordcloud parameters")))),
                 
                 sliderInput("freq",
@@ -53,7 +70,7 @@ shinyUI( # start of UI code
                                      p("This is developed by the team of 3 members [ Vishal Somshekhar Shetty,  Shreenath KS and Aastha Sharma ] as part of the TABA Assignment of CBA Course : Batch 11"),
                                      
                                      
-                                 
+                                     
                                      h3('Logical Flow of the App'),
                                      p(span (strong("A. Upload and Read Text File")),'Click on browse to upload the text file and wait for few mins for it to reflect in the annotation tab'),
                                      p("This app supports only text files.Kindly ensure the data input is in notepad format or .txt", align ="justify"),
@@ -61,13 +78,13 @@ shinyUI( # start of UI code
                                      a(href="https://raw.githubusercontent.com/VDatum/UDPipe_Shiny_TABA/master/isb%20pgp%20goog%20search.txt"
                                        ,"Sample data input file"),  
                                      
-                                     p(span (strong("B. Select the udpipe model")),'Option to upload the trained udpipe model in English, Hindi and German.'),
+                                     p(span (strong("B. Select the udpipe model")),'Option to upload the trained udpipe model in English and Hindi'),
                                      p('Choose the respective models based on the uploaded text file. Default is chosen as English'),
                                      
                                      p(span (strong("C. Select the XPOS Tags for the  co-occurence plot")),'Select list of part-of-speech tags (XPOS) using check box for plotting co-occurrences'),
                                      p(' Please use the checkbox to select different parts of speech for this plot. Default is Noun, Adjective & Proper Noun'),
                                      
-                                
+                                     
                                      h3('End Goal of this App ?'),
                                      p(span (strong("Annotation")),': Display a table of annotated document using UDPipe library'),
                                      p(' To make use of UDPipe for  making annotation table , word clouds &  co-occurence graphs'),
@@ -103,7 +120,7 @@ shinyUI( # start of UI code
                                      plotOutput('plot_verbs')),
                             tabPanel("Co-Occurrence Plot",   # Co Occurence Plot based on selection
                                      plotOutput('plot_CoOccurence_Plot')),
-                             tabPanel("Most frequently occured XPOS",   # Frequency plot on the occurence of difference XPOS tags
+                            tabPanel("Most frequently occured XPOS",   # Frequency plot on the occurence of difference XPOS tags
                                      plotOutput('plot_freqplot'))
                             
                 ) # End of Tab Set Panel
