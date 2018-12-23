@@ -18,7 +18,7 @@ shinyServer(function(input, output) {
     }
   })
   
-  # uploading the udpipe_model function [ Languages included : English, Spanish and Hindi ]
+  # uploading the udpipe_model function [ Languages included : English, French and Hindi ]
   # Giving option to upload trained udpipe udpipe_model for different languages as specified above
   
   udpipe_model = reactive({
@@ -28,7 +28,7 @@ shinyServer(function(input, output) {
     if(input$radio==2)
     {udpipe_model = udpipe_load_model("hindi-ud-2.0-170801.udpipe")}
     if(input$radio==3)
-    {udpipe_model = udpipe_load_model("spanish-ud-2.0-170801.udpipe")}
+    {udpipe_model = udpipe_load_model("french-ud-2.0-170801.udpipe")}
     return(udpipe_model)
   })
   
