@@ -17,7 +17,7 @@ shinyUI( # start of UI code
               (
                 fileInput("file_input", label = h4("Upload Text File")), #upload option for user to give the input file
                  radioButtons("radio", label = h5("UdPipe Model"),
-                             choices = list("English" = 1, "Hindi" = 2, "French" = 3), 
+                             choices = list("English" = 1, "Hindi" = 2, "German" = 3), 
                              selected = 1),
                   #Default Selection as 1 for the English UDPipe Model for the annotated text  
                          
@@ -61,7 +61,7 @@ shinyUI( # start of UI code
                                      a(href="https://raw.githubusercontent.com/VDatum/UDPipe_Shiny_TABA/master/isb%20pgp%20goog%20search.txt"
                                        ,"Sample data input file"),  
                                      
-                                     p(span (strong("B. Select the udpipe model")),'Option to upload the trained udpipe model in English, Hindi and French.'),
+                                     p(span (strong("B. Select the udpipe model")),'Option to upload the trained udpipe model in English, Hindi and German.'),
                                      p('Choose the respective models based on the uploaded text file. Default is chosen as English'),
                                      
                                      p(span (strong("C. Select the XPOS Tags for the  co-occurence plot")),'Select list of part-of-speech tags (XPOS) using check box for plotting co-occurrences'),
